@@ -2,6 +2,11 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import { filterImageFromURL, deleteLocalFiles } from './util/util';
 
+const User: [{ username: string, email: string, password: string }] = [
+  { username: 'test-username', email: 'email.test@email.com', password: 'test' }
+];
+
+
 (async () => {
 
   // Init the Express application
@@ -36,7 +41,7 @@ import { filterImageFromURL, deleteLocalFiles } from './util/util';
       const { image_url } = req.query;
       if (!image_url) return res.status(400).send('Image url is required');
       const filteredpath = await filterImageFromURL(image_url);
-      return res.status(201).json({
+      return res.status(200).json({
         status: 200,
         image_path: filteredpath
       });
@@ -65,6 +70,79 @@ import { filterImageFromURL, deleteLocalFiles } from './util/util';
         error
       });
     }
+  });
+
+  // signup
+  app.post('/register', async (req, res) => {
+
+    try {
+      const { username, email, password } = req.body
+
+      // check if email and password are provided
+      if (!email || !password) return res.status(400).json({
+        status: 400,
+        message: 'email and password are required'
+      });
+
+      let user;
+
+      // check if email is already registered
+      user = await User.find(user => user.email === email)
+      if (user) return res.status(400).json({
+        status: 400,
+        message: 'email already registered, please use another email or login'
+      });
+
+      user = await User.push({ username, email, password });
+      const createdUser = await User.find(user => user.email === email);
+
+      return res.status(201).json({
+        status: 201,
+        user: createdUser
+      });
+
+    } catch (error) {
+      return res.status(500).json({
+        status: 500,
+        error
+      });
+    }
+
+  });
+
+  // login
+  app.post('/login', async (req, res) => {
+
+    try {
+      const { email, password } = req.body
+
+      // check if email and password are provided
+      if (!email || !password) return res.status(400).json({
+        status: 400,
+        message: 'email and password are required'
+      });
+
+      // login
+      const user = await User.find(user => user.email === email)
+
+      if (!user || user.email !== email || user.password !== password) return res.status(400).json({
+        status: 400,
+        message: 'invalid email or password'
+      });
+
+      return res.status(200).json({
+        status: 200,
+        user
+      });
+
+    } catch (error) {
+      console.log(error)
+      return res.status(500).json({
+        status: 500,
+        error
+      });
+    }
+
   });
 
   // Root Endpoint
