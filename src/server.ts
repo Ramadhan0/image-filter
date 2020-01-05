@@ -1,9 +1,9 @@
 import express from 'express';
 import bodyParser from 'body-parser';
-import { filterImageFromURL, deleteLocalFiles } from './util/util';
+import { filterImageFromURL, deleteLocalFiles, encryptPassword, comparePassword, generateToken, authenticate } from './util/util';
 
 const User: [{ username: string, email: string, password: string }] = [
-  { username: 'test-username', email: 'email.test@email.com', password: 'test' }
+  { username: 'test-username', email: 'email.test@email.com', password: 'test1234' }
 ];
 
 
@@ -36,7 +36,7 @@ const User: [{ username: string, email: string, password: string }] = [
 
   //! END @TODO1
 
-  app.get("/filterimage", async (req, res) => {
+  app.get("/filterimage", authenticate, async (req: express.Request, res: express.Response) => {
     try {
       const { image_url } = req.query;
       if (!image_url) return res.status(400).send('Image url is required');
@@ -55,7 +55,7 @@ const User: [{ username: string, email: string, password: string }] = [
   });
 
   // delete image
-  app.delete("/filterimage", async (req, res) => {
+  app.delete("/filterimage", authenticate, async (req: express.Request, res: express.Response) => {
     try {
       const { image_path } = req.query;
       if (!image_path) return res.status(400).send('Image path is required');
@@ -73,7 +73,7 @@ const User: [{ username: string, email: string, password: string }] = [
   });
 
   // signup
-  app.post('/register', async (req, res) => {
+  app.post('/register', async (req: express.Request, res: express.Response) => {
 
     try {
       const { username, email, password } = req.body
@@ -93,15 +93,25 @@ const User: [{ username: string, email: string, password: string }] = [
         message: 'email already registered, please use another email or login'
       });
 
-      user = await User.push({ username, email, password });
-      const createdUser = await User.find(user => user.email === email);
+      const encryptedPassword = await encryptPassword(password)
+
+      user = await User.push({ username, email, password: encryptedPassword });
+      const createdUser: { username: string, email: string } = await User.find(user => user.email === email);
+      user = {
+        username: createdUser.username,
+        email: createdUser.email
+      }
+
+      const token = await generateToken(user);
 
       return res.status(201).json({
         status: 201,
-        user: createdUser
+        user,
+        token
       });
 
     } catch (error) {
+      console.log(error);
       return res.status(500).json({
         status: 500,
         error
@@ -111,7 +121,7 @@ const User: [{ username: string, email: string, password: string }] = [
   });
 
   // login
-  app.post('/login', async (req, res) => {
+  app.post('/login', async (req: express.Request, res: express.Response) => {
 
     try {
       const { email, password } = req.body
@@ -125,14 +135,23 @@ const User: [{ username: string, email: string, password: string }] = [
       // login
       const user = await User.find(user => user.email === email)
 
-      if (!user || user.email !== email || user.password !== password) return res.status(400).json({
+      if (!user || user.email !== email) return res.status(400).json({
         status: 400,
         message: 'invalid email or password'
       });
 
+      const isPasswordValid = await comparePassword(password, user.password);
+      if (!isPasswordValid) return res.status(400).json({
+        status: 400,
+        message: 'invalid email or password'
+      });
+
+      const token = await generateToken({ username: user.username, email: user.email });
+
       return res.status(200).json({
         status: 200,
-        user
+        user: { username: user.username, email: user.email },
+        token
       });
 
     } catch (error) {
@@ -147,7 +166,7 @@ const User: [{ username: string, email: string, password: string }] = [
 
   // Root Endpoint
   // Displays a simple message to the user
-  app.get("/", async (req, res) => {
+  app.get("/", async (req: express.Request, res: express.Response) => {
     res.send("try GET /filteredimage?image_url={{}}")
   });
 
