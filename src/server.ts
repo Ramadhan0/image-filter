@@ -46,7 +46,6 @@ const User: [{ username: string, email: string, password: string }] = [
         image_path: filteredpath
       });
     } catch (error) {
-      console.log(error);
       return res.status(500).json({
         status: 500,
         error
@@ -111,7 +110,6 @@ const User: [{ username: string, email: string, password: string }] = [
       });
 
     } catch (error) {
-      console.log(error);
       return res.status(500).json({
         status: 500,
         error
@@ -155,7 +153,6 @@ const User: [{ username: string, email: string, password: string }] = [
       });
 
     } catch (error) {
-      console.log(error)
       return res.status(500).json({
         status: 500,
         error

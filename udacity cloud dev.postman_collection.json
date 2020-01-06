@@ -1,0 +1,136 @@
+{
+	"info": {
+		"_postman_id": "d2a77827-b424-4510-9471-1002e850ccad",
+		"name": "udacity cloud dev",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "image filter",
+			"item": [
+				{
+					"name": "image filter",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoidGVzdC11c2VybmFtZSIsImVtYWlsIjoiZW1haWwudGVzdDFAZW1haWwuY29tIn0sImlhdCI6MTY1ODc0MDM0NSwiZXhwIjoxNjU4NzU4MzQ1fQ.CckxrhQetmUoDXTHkkIYt1n2cvdfX0aIYjJ0vF46dwQ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8082/filterimage?image_url=https://izitini-spaces.fra1.digitaloceanspaces.com/buttons1.png",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"filterimage"
+							],
+							"query": [
+								{
+									"key": "image_url",
+									"value": "https://izitini-spaces.fra1.digitaloceanspaces.com/buttons1.png"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete image",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoidGVzdC11c2VybmFtZSIsImVtYWlsIjoiZW1haWwudGVzdDFAZW1haWwuY29tIn0sImlhdCI6MTY1ODc0MDM0NSwiZXhwIjoxNjU4NzU4MzQ1fQ.CckxrhQetmUoDXTHkkIYt1n2cvdfX0aIYjJ0vF46dwQ",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8082/filterimage?image_path=/home/rama/Documents/udacity/image-filter/src/util/tmp/filtered.1861.jpg&",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"filterimage"
+							],
+							"query": [
+								{
+									"key": "image_path",
+									"value": "/home/rama/Documents/udacity/image-filter/src/util/tmp/filtered.1861.jpg"
+								},
+								{
+									"key": "",
+									"value": null
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "register",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"username\": \"test-username\",\n    \"email\": \"email.test1@email.com\",\n    \"password\": \"test1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8082/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"email.test1@email.com\",\n    \"password\": \"test1234\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8082/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8082",
+							"path": [
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
