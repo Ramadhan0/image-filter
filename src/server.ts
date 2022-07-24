@@ -36,13 +36,13 @@ import { filterImageFromURL, deleteLocalFiles } from './util/util';
       const { image_url } = req.query;
       if (!image_url) return res.status(400).send('Image url is required');
       const filteredpath = await filterImageFromURL(image_url);
-      res.status(201).json({
+      return res.status(201).json({
         status: 200,
         image_path: filteredpath
       });
     } catch (error) {
       console.log(error);
-      res.status(500).json({
+      return res.status(500).json({
         status: 500,
         error
       });
@@ -50,14 +50,20 @@ import { filterImageFromURL, deleteLocalFiles } from './util/util';
   });
 
   // delete image
-  app.delete("/filterimage/:image_path", async (req, res) => {
+  app.delete("/filterimage", async (req, res) => {
     try {
-      const { image_path } = req.params;
-      if (!image_path) return res.status(400).send('Image url is required');
-      return deleteLocalFiles([image_path]);
+      const { image_path } = req.query;
+      if (!image_path) return res.status(400).send('Image path is required');
+      await deleteLocalFiles([image_path]);
+      return res.status(200).json({
+        status: 200,
+        message: 'Image deleted successfully'
+      });
     } catch (error) {
-      console.log(error);
-      res.status(500).send(error);
+      return res.status(500).json({
+        status: 500,
+        error
+      });
     }
   });
 
