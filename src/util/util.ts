@@ -3,7 +3,8 @@ import 'dotenv/config';
 import bcrypt from "bcrypt";
 import express from 'express';
 import Jimp = require("jimp");
-import jwt from "jsonwebtoken";
+
+const jwt = require('jsonwebtoken');
 
 // filterImageFromURL
 // helper function to download, filter, and save the filtered image locally
