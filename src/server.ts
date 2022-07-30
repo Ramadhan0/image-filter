@@ -3,7 +3,11 @@ import bodyParser from 'body-parser';
 import { filterImageFromURL, deleteLocalFiles, encryptPassword, comparePassword, generateToken, authenticate } from './util/util';
 
 const User: [{ username: string, email: string, password: string }] = [
-  { username: 'test-username', email: 'email.test@email.com', password: 'test1234' }
+  {
+    username: 'test-username',
+    email: 'email.test@email.com',
+    password: '$2b$10$2VKQ2IN/Qo3RohLCjWpm..VYHf.Ub.B.DXfSgJ3VbA/bh.Z75nQEm'
+  }
 ];
 
 
@@ -95,7 +99,8 @@ const User: [{ username: string, email: string, password: string }] = [
       const encryptedPassword = await encryptPassword(password)
 
       user = await User.push({ username, email, password: encryptedPassword });
-      const createdUser: { username: string, email: string } = await User.find(user => user.email === email);
+      const createdUser: { username: string, email: string, password: any } = await User.find(user => user.email === email);
+      console.log(createdUser);
       user = {
         username: createdUser.username,
         email: createdUser.email
