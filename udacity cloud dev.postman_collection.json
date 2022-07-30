@@ -15,17 +15,19 @@
 						"header": [
 							{
 								"key": "Authorization",
-								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoidGVzdC11c2VybmFtZSIsImVtYWlsIjoiZW1haWwudGVzdDFAZW1haWwuY29tIn0sImlhdCI6MTY1ODc0MDM0NSwiZXhwIjoxNjU4NzU4MzQ1fQ.CckxrhQetmUoDXTHkkIYt1n2cvdfX0aIYjJ0vF46dwQ",
+								"value": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7InVzZXJuYW1lIjoidGVzdC11c2VybmFtZSIsImVtYWlsIjoiZW1haWwudGVzdDFAZW1haWwuY29tIn0sImlhdCI6MTY1OTIwOTcyOSwiZXhwIjoxNjU5MjI3NzI5fQ.eQgdV43YNaSuSa16cvPD67OXaFg2fGQj7MGqHByFl7Y",
 								"type": "text"
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8082/filterimage?image_url=https://izitini-spaces.fra1.digitaloceanspaces.com/buttons1.png",
+							"raw": "http://imagefilter-dev.us-east-1.elasticbeanstalk.com/filterimage?image_url=https://izitini-spaces.fra1.digitaloceanspaces.com/buttons1.png",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"imagefilter-dev",
+								"us-east-1",
+								"elasticbeanstalk",
+								"com"
 							],
-							"port": "8082",
 							"path": [
 								"filterimage"
 							],
@@ -51,23 +53,21 @@
 							}
 						],
 						"url": {
-							"raw": "http://localhost:8082/filterimage?image_path=/home/rama/Documents/udacity/image-filter/src/util/tmp/filtered.1861.jpg&",
+							"raw": "http://imagefilter-dev.us-east-1.elasticbeanstalk.com/filterimage?image_path=/var/app/current/util/tmp/filtered.173.jpg",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"imagefilter-dev",
+								"us-east-1",
+								"elasticbeanstalk",
+								"com"
 							],
-							"port": "8082",
 							"path": [
 								"filterimage"
 							],
 							"query": [
 								{
 									"key": "image_path",
-									"value": "/home/rama/Documents/udacity/image-filter/src/util/tmp/filtered.1861.jpg"
-								},
-								{
-									"key": "",
-									"value": null
+									"value": "/var/app/current/util/tmp/filtered.173.jpg"
 								}
 							]
 						}
@@ -89,12 +89,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8082/register",
+							"raw": "http://imagefilter-dev.us-east-1.elasticbeanstalk.com/register",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"imagefilter-dev",
+								"us-east-1",
+								"elasticbeanstalk",
+								"com"
 							],
-							"port": "8082",
 							"path": [
 								"register"
 							]
@@ -117,12 +119,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8082/login",
+							"raw": "http://imagefilter-dev.us-east-1.elasticbeanstalk.com/login",
 							"protocol": "http",
 							"host": [
-								"localhost"
+								"imagefilter-dev",
+								"us-east-1",
+								"elasticbeanstalk",
+								"com"
 							],
-							"port": "8082",
 							"path": [
 								"login"
 							]
