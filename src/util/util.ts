@@ -69,9 +69,17 @@ const verifyToken = async (token: string) => {
 
 // Auth middleware
 export const authenticate = async (req: express.Request, res: express.Response, next: express.NextFunction) => {
-  const token = req.headers.authorization || '';
-  if (!token) return res.status(401).json({ status: 401, message: 'Unauthorized' });
-  const decoded = await verifyToken(token);
-  if (!decoded) return res.status(401).json({ status: 401, message: 'Unauthorized' });
-  return next();
+  try {
+    const token = req.headers.authorization || '';
+    if (!token) return res.status(401).json({ status: 401, message: 'Unauthorized' });
+    const decoded = await verifyToken(token);
+    if (!decoded) return res.status(401).json({ status: 401, message: 'Unauthorized' });
+    return next();
+  } catch (error) {
+    return res.status(500).json({
+      status: 500,
+      error
+    });
+  }
+
 }
